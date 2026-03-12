@@ -2,6 +2,7 @@ package com.belak.ecommerce.service.product;
 
 import com.belak.ecommerce.model.Product;
 import com.belak.ecommerce.request.AddProductRequest;
+import com.belak.ecommerce.request.ProductUpdateRequest;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface IProductService {
 
     Product getProductById(Long id);
     void deleteProductById(Long id);
-    void updateProduct(Product product , Long productId);
+    Product updateProduct(ProductUpdateRequest product , Long productId);
 
     List<Product> getProducts();
     List<Product> getProductsByBrand(String brand);
