@@ -1,5 +1,6 @@
 package com.belak.shoppingcart.service.product;
 
+import com.belak.shoppingcart.dto.ProductDto;
 import com.belak.shoppingcart.model.Product;
 import com.belak.shoppingcart.request.AddProductRequest;
 import com.belak.shoppingcart.request.ProductUpdateRequest;
@@ -30,4 +31,8 @@ public interface IProductService {
     Long countProductsByBrandAndName(String brand,String name);
 
     List<Product> getAllProducts();
+
+    List<ProductDto> getConvertedProducts(List<Product> products);
+
+    ProductDto convertToDto(Product product);
 }

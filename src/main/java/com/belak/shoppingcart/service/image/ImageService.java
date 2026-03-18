@@ -44,17 +44,15 @@ public class ImageService implements  IImageService{
                 image.setFileType(file.getContentType());
                 image.setImage(file.getBytes());
                 image.setProduct(product);
-                String buildDownloadUrl = "/api/v1/images/image/donwload" ;
-                String downloadUrl = buildDownloadUrl+ image.getId();
-                image.setDownloadUrl(downloadUrl);
+                String buildDownloadUrl = "/api/v1/images/image/download/" ;
                 Image savedImage = imageRepository.save(image);
                  savedImage.setDownloadUrl(buildDownloadUrl+savedImage.getId());
                  imageRepository.save(savedImage);
 
                  ImageDto imageDto = new ImageDto() ;
                  imageDto.setImageId(savedImage.getId());
-                 imageDto.setImageName(savedImage.getFileName());
-                 savedImage.setDownloadUrl(savedImage.getDownloadUrl());
+                 imageDto.setFileName(savedImage.getFileName());
+                 imageDto.setDownloadUrl(savedImage.getDownloadUrl());
                  savedImageDto.add(imageDto);
             } catch (IOException e) {
                 throw  new RuntimeException(e.getMessage());
