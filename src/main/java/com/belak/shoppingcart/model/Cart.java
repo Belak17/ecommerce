@@ -22,19 +22,19 @@ public class Cart {
     @OneToMany(mappedBy = "cart" , cascade = CascadeType.ALL , orphanRemoval = true)
     private Set<CartItem> items ;
 
-    private void addItem (CartItem item)
+    public  void addItem (CartItem item)
     {
         this.items.add(item);
         item.setCart(this);
         updateTotalAmount();
     }
-    private void removeItem (CartItem item )
+    public  void removeItem (CartItem item )
     {
         this.items.remove(item);
         item.setCart(null);
         updateTotalAmount();
     }
-    private void updateTotalAmount()
+    public void updateTotalAmount()
     {
         this.totalAmount = items.stream()
                 .map(item -> {
