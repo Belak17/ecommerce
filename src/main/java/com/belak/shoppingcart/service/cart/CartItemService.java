@@ -45,7 +45,7 @@ public class CartItemService implements ICartItemService{
          cartItem.setTotalPrice();
          cart.addItem(cartItem);
          cartItemRepository.save(cartItem);
-         cartRepository.save(cart);
+
         // 4. If yes increase the quantity with the requested quantity
         // If no , initiate a new cartItem entry
     }
@@ -85,10 +85,12 @@ public class CartItemService implements ICartItemService{
                     item.setUnitPrice(item.getProduct().getPrice());
                     item.setTotalPrice();
                 });
-        BigDecimal totalAmount = cart.getTotalAmount() ;
+        BigDecimal totalAmount = cart.getItems()
+                .stream()
+                .map(CartItem::getTotalPrice)
+                .reduce(BigDecimal.ZERO,BigDecimal::add) ;
         cart.setTotalAmount(totalAmount);
         cartRepository.save(cart);
-
 
     }
 

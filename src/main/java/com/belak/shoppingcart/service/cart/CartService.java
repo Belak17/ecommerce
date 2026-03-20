@@ -6,6 +6,7 @@ import com.belak.shoppingcart.repository.CartItemRepository;
 import com.belak.shoppingcart.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.concurrent.atomic.AtomicLong;
@@ -18,13 +19,12 @@ public class CartService implements  ICartService{
     private final AtomicLong cartIdGenerator = new AtomicLong(0);
     @Override
     public Cart getCart(Long id) {
-        Cart cart = cartRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
-        BigDecimal totalAmount = cart.getTotalAmount() ;
-        cart.setTotalAmount(totalAmount);
-
-        return cartRepository.save(cart);
+        //BigDecimal totalAmount = cart.getTotalAmount() ;
+        //cart.setTotalAmount(totalAmount);
+        return cartRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
     }
 
+    @Transactional
     @Override
     public void clearCart(Long id) {
         Cart cart = getCart(id);
@@ -46,8 +46,11 @@ public class CartService implements  ICartService{
     public Long initializeNewCart()
     {
         Cart newCart = new Cart();
-        Long newCartId = cartIdGenerator.incrementAndGet();
-        newCart.setId(newCartId);
-        return cartRepository.save(newCart).getId();
+        return cartRepository.save(newCart).getId(); // Hibernate gère l'ID
+    }
+
+    @Override
+    public Cart getCartByUserId(Long userId) {
+        return cartRepository.findByUserId(userId) ;
     }
 }
