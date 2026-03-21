@@ -15,6 +15,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
+@Table(name = "order_entity")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE )

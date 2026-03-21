@@ -1,5 +1,6 @@
 package com.belak.shoppingcart.service.user;
 
+import com.belak.shoppingcart.dto.UserDto;
 import com.belak.shoppingcart.exception.AlreadyExistsException;
 import com.belak.shoppingcart.exception.ResourceNotFoundException;
 import com.belak.shoppingcart.model.User;
@@ -7,6 +8,7 @@ import com.belak.shoppingcart.repository.UserRepository;
 import com.belak.shoppingcart.request.CreateUserRequest;
 import com.belak.shoppingcart.request.UserUpdateRequest;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,7 +16,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserService implements  IUserService{
-    private UserRepository userRepository ;
+    private final  UserRepository userRepository ;
+    private  final ModelMapper modelMapper ;
     @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId)
@@ -53,5 +56,11 @@ public class UserService implements  IUserService{
                   userRepository ::delete ,() -> {
                        throw new ResourceNotFoundException("User Not Found");
                   });
+    }
+
+    @Override
+    public UserDto convertUserToDto(User user)
+    {
+        return modelMapper.map(user,UserDto.class);
     }
 }

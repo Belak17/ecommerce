@@ -15,6 +15,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "user_entity")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
