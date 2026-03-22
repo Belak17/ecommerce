@@ -18,5 +18,5 @@ public class OrderDto {
     private LocalDate orderDate;
     private BigDecimal totalAmount;
     private String status;
-    private List<OrderItemDto> items = new ArrayList<>();
+    private List<OrderItemDto> orderItem;
 }

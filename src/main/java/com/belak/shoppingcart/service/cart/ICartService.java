@@ -1,6 +1,8 @@
 package com.belak.shoppingcart.service.cart;
 
+import com.belak.shoppingcart.dto.CartDto;
 import com.belak.shoppingcart.model.Cart;
+import com.belak.shoppingcart.model.User;
 
 import java.math.BigDecimal;
 
@@ -10,7 +12,9 @@ public interface ICartService {
     BigDecimal getTotalPrice(Long id);
 
 
-    Long initializeNewCart();
+    Cart initializeNewCart(User user);
 
     Cart getCartByUserId(Long userId);
+
+    CartDto convertCartToDto(Cart cart);
 }

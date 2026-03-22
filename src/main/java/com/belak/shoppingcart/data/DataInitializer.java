@@ -27,6 +27,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
                 continue;
             }
             User user = new User();
+            user.setEmail(defaultEmail);
             user.setFirstName("The User");
             user.setLastName("User "+i);
             user.setPassword("123456");

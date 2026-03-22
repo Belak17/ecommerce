@@ -1,6 +1,7 @@
 package com.belak.shoppingcart.service.order;
 
 import com.belak.shoppingcart.dto.OrderDto;
+import com.belak.shoppingcart.dto.OrderItemDto;
 import com.belak.shoppingcart.enums.OrderStatus;
 import com.belak.shoppingcart.exception.ResourceNotFoundException;
 import com.belak.shoppingcart.model.Cart;
@@ -18,13 +19,14 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class OrderService implements IOrderService{
     private final OrderRepository orderRepository ;
     private  final ProductRepository productRepository ;
-    private CartService cartService;
+    private final CartService cartService;
     private final ModelMapper modelMapper ;
     @Override
     public Order placeOrder(Long userId) {
@@ -88,8 +90,28 @@ public class OrderService implements IOrderService{
         return orders.stream().map(this:: convertToDto).toList();
     }
 
-    private OrderDto convertToDto(Order order)
+    @Override
+    public OrderDto convertToDto(Order order)
     {
-        return modelMapper.map(order, OrderDto.class);
+        OrderDto dto = modelMapper.map(order, OrderDto.class);
+
+        // mapping manuel obligatoire
+        List<OrderItemDto> items = order.getOrderItem()
+                .stream()
+                .map(item -> {
+                    OrderItemDto itemDto = new OrderItemDto();
+                    itemDto.setQuantity(item.getQuantity());
+                    itemDto.setPrice(item.getPrice());
+                    // AJOUTE cA
+                    itemDto.setProductId(item.getProduct().getId());
+                    itemDto.setProductName(item.getProduct().getName());
+                    itemDto.setProductBrand(item.getProduct().getBrand());
+                    return itemDto;
+                })
+                .toList();
+
+        dto.setOrderItem(items);
+
+        return dto;
     }
 }

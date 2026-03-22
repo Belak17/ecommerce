@@ -13,6 +13,6 @@ public class UserDto {
     private String firstName ;
     private String lastName ;
     private  String email ;
-    private List<OrderDto> orders = new ArrayList<>() ;
+    private List<OrderDto> order = new ArrayList<>() ;
     private CartDto cart ;
 }
