@@ -14,6 +14,8 @@ import com.belak.shoppingcart.service.order.IOrderService;
 import com.belak.shoppingcart.service.order.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -86,5 +88,13 @@ public class UserService implements  IUserService{
         dto.setOrder(orders);
 
         return dto;
+    }
+
+    @Override
+    public User getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        assert authentication != null;
+        String email = authentication.getName();
+        return userRepository.findByEmail(email);
     }
 }

@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
 @Getter
@@ -25,5 +26,5 @@ public class Role {
     }
 
     @ManyToMany(mappedBy = "roles")
-    private Collection<User> users = new ArrayList<>() ;
+    private Collection<User> users = new HashSet<>() ;
 }
